@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM та JavaScript Приклади</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        button {
+            margin: 5px 0;
+            padding: 5px 10px;
+        }
+        .red {
+            color: red;
+        }
+        img {
+            max-width: 300px;
+            display: block;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1 id="header">Привіт, світ!</h1>
+
+<hr>
+
+<!-- Завдання 1 -->
+<h2>Завдання 1: Вивід заголовка в консоль</h2>
+<script>
+    console.log(document.getElementById("header").innerText);
+</script>
+
+<!-- Завдання 2 -->
+<h2>Завдання 2: Зміна тексту абзаца</h2>
+<p id="text">Цей текст зміниться.</p>
+<button id="changeTextButton">Змінити текст</button>
+<script>
+    document.getElementById("changeTextButton").onclick = function() {
+        document.getElementById("text").innerText = "Текст змінено!";
+    };
+</script>
+
+<!-- Завдання 3 -->
+<h2>Завдання 3: Додавання абзаців</h2>
+<button id="addParagraphButton">Додати абзац</button>
+<script>
+    document.getElementById("addParagraphButton").onclick = function() {
+        const newParagraph = document.createElement("p");
+        newParagraph.innerText = "Це новий абзац!";
+        document.body.appendChild(newParagraph);
+    };
+</script>
+
+<!-- Завдання 4 -->
+<h2>Завдання 4: Видалення останнього абзаца</h2>
+<button id="removeLastParagraph">Видалити останній абзац</button>
+<script>
+    document.getElementById("removeLastParagraph").onclick = function() {
+        const paragraphs = document.getElementsByTagName("p");
+        if (paragraphs.length > 0) {
+            paragraphs[paragraphs.length - 1].remove();
+        }
+    };
+</script>
+
+<!-- Завдання 5 -->
+<h2>Завдання 5: Зміна фону сторінки</h2>
+<button id="changeBackgroundColor">Змінити фон</button>
+<script>
+    document.getElementById("changeBackgroundColor").onclick = function() {
+        document.body.style.backgroundColor = "lightblue";
+    };
+</script>
+
+<!-- Завдання 6 -->
+<h2>Завдання 6: Зміна кольору тексту при наведенні</h2>
+<p id="hoverText">Наведіть курсор сюди, щоб змінити колір.</p>
+<script>
+    const hoverText = document.getElementById("hoverText");
+    hoverText.onmouseover = function() { this.style.color = "red"; };
+    hoverText.onmouseout = function() { this.style.color = "black"; };
+</script>
+
+<!-- Завдання 7 -->
+<h2>Завдання 7: Валідація електронної пошти</h2>
+<form id="emailForm">
+    <input type="email" id="email" placeholder="Електронна пошта" required>
+    <button type="submit">Надіслати</button>
+</form>
+<script>
+    document.getElementById("emailForm").onsubmit = function(event) {
+        const email = document.getElementById("email").value;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            alert("Невірний формат електронної пошти!");
+            event.preventDefault();
+        }
+    };
+</script>
+
+<!-- Завдання 8 -->
+<h2>Завдання 8: Зміна зображення</h2>
+<img id="image" src="https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/396e9/MainBefore.jpg" alt="Перше зображення">
+<button id="changeImage">Змінити зображення</button>
+<script>
+    document.getElementById("changeImage").onclick = function() {
+        document.getElementById("image").src = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiGKyFV67YwdliZXRDV45ZP-eea27KvP_vuckWD8BYrspKJsygum0Qrpr8vBzeAKD7LRNRXst8XT2f3P87POX7Y1ySHYALADfXBkza_l4zGW1BwcCjGo_BW_7KndzvVkFmyMVRvuFoRDpU/s1600/paskal.jpg";
+    };
+</script>
+
+<!-- Завдання 9 -->
+<h2>Завдання 9: Використання класів</h2>
+<p id="styledText">Цей текст стане червоним.</p>
+<button id="addClassButton">Додати клас</button>
+<script>
+    document.getElementById("addClassButton").onclick = function() {
+        document.getElementById("styledText").classList.add("red");
+    };
+</script>
+
+</body>
+</html>
