@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Вебформа з валідацією</title>
+
+    <!-- ✅ Підключення jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            width: 400px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus, select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102,126,234,0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 10px;
+            background: #667eea;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #5563d6;
+            transform: scale(1.02);
+        }
+
+        button:disabled {
+            background: gray;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        p {
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .block {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Контактна форма</h2>
+
+    <!-- ✅ Завдання 1, 2, 6, 7, 8, 9 -->
+    <form id="contactForm">
+
+        <input type="text" id="name" placeholder="Ваше ім'я" required>
+
+        <input type="email" id="email" placeholder="Електронна пошта" required>
+
+        <input type="text" id="address" placeholder="Адреса">
+
+        <button type="submit" disabled>Надіслати</button>
+
+    </form>
+
+
+    <!-- ✅ Завдання 5 -->
+    <div class="block">
+        <h3>Вибір типу даних</h3>
+
+        <select id="dataType">
+            <option value="text">Текст</option>
+            <option value="email">Електронна пошта</option>
+            <option value="tel">Телефон</option>
+        </select>
+
+        <button id="showDataType">Показати тип даних</button>
+    </div>
+
+
+    <!-- ✅ Завдання 3 -->
+    <div class="block">
+        <h3>jQuery – зміна тексту</h3>
+
+        <p id="text">Цей текст зміниться.</p>
+
+        <button id="changeTextButton">Змінити текст</button>
+    </div>
+
+
+    <!-- ✅ Завдання 4 -->
+    <div class="block">
+        <h3>Додавання абзаців</h3>
+
+        <button id="addParagraphButton">Додати абзац</button>
+    </div>
+
+</div>
+
+
+<script>
+    /* ✅ Завдання 1 + 2 + 6 + 8 */
+    document.getElementById("contactForm").onsubmit = function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const address = document.getElementById("address").value;
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+            alert("Невірний формат електронної пошти!");
+            return;
+        }
+
+        console.log(`Ім'я: ${name}, Email: ${email}, Адреса: ${address}`);
+
+        localStorage.setItem("name", name);
+        localStorage.setItem("email", email);
+        localStorage.setItem("address", address);
+
+        alert("Дані збережено!");
+    };
+
+
+    /* ✅ Завдання 9 */
+    window.onload = function() {
+        const name = localStorage.getItem("name");
+        const email = localStorage.getItem("email");
+        const address = localStorage.getItem("address");
+
+        if (name) document.getElementById("name").value = name;
+        if (email) document.getElementById("email").value = email;
+        if (address) document.getElementById("address").value = address;
+    };
+
+
+    /* ✅ Завдання 7 */
+    const inputs = document.querySelectorAll("input");
+    const submitButton = document.querySelector("button[type='submit']");
+
+    inputs.forEach(input => {
+        input.oninput = function() {
+            const isEmpty = Array.from(inputs).some(input => input.value === "");
+            submitButton.disabled = isEmpty;
+        };
+    });
+
+
+    /* ✅ Завдання 3 */
+    $("#changeTextButton").click(function() {
+        $("#text").text("ВСІМ ПРИВІТ🖐️");
+    });
+
+
+    /* ✅ Завдання 4 */
+    document.getElementById("addParagraphButton").onclick = function() {
+        const newParagraph = document.createElement("p");
+        newParagraph.innerText = "Новий абзац";
+        document.querySelector(".container").appendChild(newParagraph);
+    };
+
+
+    /* ✅ Завдання 5 */
+    document.getElementById("showDataType").onclick = function() {
+        const selectedType = document.getElementById("dataType").value;
+        alert(`Вибрано тип: ${selectedType}`);
+    };
+</script>
+
+</body>
+</html>
